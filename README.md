@@ -66,14 +66,16 @@ Changes take effect at sign-in:
 - **Granting** access lets the user start a Studio session from their next sign-in onward.
 - **Removing** access (in restricted mode) immediately revokes issued credentials and blocks new sign-ins, but does not terminate an already-active session — the user must sign out or wait for expiration.
 
-## Requirements
+## Running it in Python
+
+### Requirements
 
 - Python 3.9+
 - A Treasure Data **Master API key** (`ACCOUNT_ID/KEY` format). `grant` and
   `remove` require the account administrator role; `check` can be run by an
   account admin, delegated admin, or the user themselves.
 
-## Setup
+### Setup
 
 ```bash
 git clone https://github.com/tushar-fde-ai/user-studio-access.git
@@ -85,7 +87,7 @@ cp .env.example .env
 # edit .env and set TD_API_KEY (and TD_API_ENDPOINT / TD_API_VERSION if needed)
 ```
 
-## Usage
+### Usage
 
 ```bash
 # Grant a user Studio access
@@ -98,7 +100,7 @@ python main.py check --user-id 12345
 python main.py remove --user-id 12345
 ```
 
-## Using the client directly
+### Using the client directly
 
 ```python
 from studio_access import StudioAccessClient
