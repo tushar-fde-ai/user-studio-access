@@ -1,0 +1,120 @@
+{
+  "info": {
+    "name": "Treasure AI Studio Access Control",
+    "description": "Grant, check, and remove a user's Treasure AI Studio access.\n\nDocs: https://docs.treasure.ai/products/control-panel/security/users/controlling-ai-studio-access\n\nSetup:\n1. Import this collection.\n2. Import postman_environment.json (or create your own environment) and fill in `api_key`, `base_url`, and `user_id`.\n3. Select that environment in the top-right dropdown before sending requests.\n\nAuth: Master API key only, header `Authorization: TD1 <api_key>`. PUT/DELETE require account administrator role. GET can be run by an account admin, delegated admin, or the user themselves.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      { "key": "key", "value": "Authorization", "type": "string" },
+      { "key": "value", "value": "TD1 {{api_key}}", "type": "string" },
+      { "key": "in", "value": "header", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "base_url", "value": "https://api.treasuredata.com" },
+    { "key": "user_id", "value": "12345" },
+    { "key": "api_key", "value": "your_account_id/your_master_api_key" }
+  ],
+  "item": [
+    {
+      "name": "v4",
+      "item": [
+        {
+          "name": "Grant access (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"full_access\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v4/users/{{user_id}}/profile_options/treasure_ai_studio",
+              "host": ["{{base_url}}"],
+              "path": ["v4", "users", "{{user_id}}", "profile_options", "treasure_ai_studio"]
+            },
+            "description": "Grants the user full_access to Treasure AI Studio. Requires account administrator role. Returns 200 OK with the resolved value."
+          }
+        },
+        {
+          "name": "Check access (GET)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v4/users/{{user_id}}/profile_options/treasure_ai_studio",
+              "host": ["{{base_url}}"],
+              "path": ["v4", "users", "{{user_id}}", "profile_options", "treasure_ai_studio"]
+            },
+            "description": "Returns the user's resolved profile option value. `null` means unset (follows account default). Callable by account admin, delegated admin, or the user themselves."
+          }
+        },
+        {
+          "name": "Remove access (DELETE)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v4/users/{{user_id}}/profile_options/treasure_ai_studio",
+              "host": ["{{base_url}}"],
+              "path": ["v4", "users", "{{user_id}}", "profile_options", "treasure_ai_studio"]
+            },
+            "description": "Removes the user's access grant. Requires account administrator role. In restricted mode this immediately revokes issued credentials. Returns 204 No Content."
+          }
+        }
+      ]
+    },
+    {
+      "name": "v3",
+      "item": [
+        {
+          "name": "Grant access (PUT)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": \"full_access\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v3/access_control/users/{{user_id}}/profile_options/treasure_ai_studio",
+              "host": ["{{base_url}}"],
+              "path": ["v3", "access_control", "users", "{{user_id}}", "profile_options", "treasure_ai_studio"]
+            },
+            "description": "Same as v4, with the /access_control path prefix."
+          }
+        },
+        {
+          "name": "Check access (GET)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v3/access_control/users/{{user_id}}/profile_options/treasure_ai_studio",
+              "host": ["{{base_url}}"],
+              "path": ["v3", "access_control", "users", "{{user_id}}", "profile_options", "treasure_ai_studio"]
+            }
+          }
+        },
+        {
+          "name": "Remove access (DELETE)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v3/access_control/users/{{user_id}}/profile_options/treasure_ai_studio",
+              "host": ["{{base_url}}"],
+              "path": ["v3", "access_control", "users", "{{user_id}}", "profile_options", "treasure_ai_studio"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

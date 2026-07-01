@@ -69,6 +69,34 @@ print(result.value)        # "full_access" or None
 client.remove_access(user_id=12345)
 ```
 
+## Running it in Postman
+
+The `postman/` folder has a ready-made collection covering all three
+operations, for v3 and v4 both.
+
+1. Open Postman → **Import** → select `postman/postman_collection.json`.
+2. Import `postman/postman_environment.json` the same way, then select
+   **"TD AI Studio Access - Local"** from the environment dropdown
+   (top-right).
+3. Edit the environment's variables (click the eye icon, or the environment
+   name):
+   - `api_key` → your Master API key, `ACCOUNT_ID/KEY` format
+   - `base_url` → defaults to `https://api.treasuredata.com` (US); change for other regions
+   - `user_id` → the target user's numeric ID
+4. Open **v4 → Check access (GET)** and hit **Send**. You should get `200 OK`
+   with a body like `{"treasure_ai_studio": "full_access"}` or `null` if
+   unset.
+5. **Grant access (PUT)** and **Remove access (DELETE)** work the same way —
+   just select the request and Send. Grant/Remove require the account
+   administrator role on the key used.
+
+Auth is pre-wired at the collection level as `Authorization: TD1 {{api_key}}`
+— you shouldn't need to touch the Auth tab on individual requests.
+
+⚠️ These calls are **not dry-run** — PUT actually grants access and DELETE
+actually revokes it (immediately, if the account is in restricted mode).
+Double check `user_id` before sending.
+
 ## Project structure
 
 ```
@@ -77,6 +105,9 @@ user-studio-access/
 ├── studio_access/
 │   ├── __init__.py
 │   └── client.py             # StudioAccessClient, StudioAccessResult, StudioAccessError
+├── postman/
+│   ├── postman_collection.json     # import into Postman
+│   └── postman_environment.json    # import + fill in api_key/user_id
 ├── requirements.txt
 ├── .env.example
 └── README.md
