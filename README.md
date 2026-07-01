@@ -10,21 +10,38 @@ per-user `treasure_ai_studio` profile option.
 ## Running it in Postman
 
 The `postman/` folder has a ready-made collection covering all three
-operations, for v3 and v4 both.
+operations, for v3 and v4 both. You don't need to clone the whole repo to
+use it — pick whichever import method is easiest:
 
-1. Open Postman → **Import** → select `postman/postman_collection.json`.
-2. Import `postman/postman_environment.json` the same way, then select
-   **"TD AI Studio Access - Local"** from the environment dropdown
-   (top-right).
-3. Edit the environment's variables (click the eye icon, or the environment
+**A. Import by link (no clone needed)**
+
+In Postman, **Import** → **Link** tab → paste one of these raw URLs → **Continue**:
+
+- Collection: `https://raw.githubusercontent.com/tushar-fde-ai/user-studio-access/main/postman/postman_collection.json`
+- Environment: `https://raw.githubusercontent.com/tushar-fde-ai/user-studio-access/main/postman/postman_environment.json`
+
+**B. Clone the repo, then import the files**
+
+```bash
+git clone https://github.com/tushar-fde-ai/user-studio-access.git
+```
+Then **Import** → **File** tab → select `postman/postman_collection.json`
+and `postman/postman_environment.json` from the cloned folder.
+
+---
+
+1. Import both the collection and the environment (either method above),
+   then select **"TD AI Studio Access - Local"** from the environment
+   dropdown (top-right).
+2. Edit the environment's variables (click the eye icon, or the environment
    name):
    - `api_key` → your Master API key, `ACCOUNT_ID/KEY` format
    - `base_url` → defaults to `https://api.treasuredata.com` (US); change for other regions
    - `user_id` → the target user's numeric ID
-4. Open **v4 → Check access (GET)** and hit **Send**. You should get `200 OK`
+3. Open **v4 → Check access (GET)** and hit **Send**. You should get `200 OK`
    with a body like `{"treasure_ai_studio": "full_access"}` or `null` if
    unset.
-5. **Grant access (PUT)** and **Remove access (DELETE)** work the same way —
+4. **Grant access (PUT)** and **Remove access (DELETE)** work the same way —
    just select the request and Send. Grant/Remove require the account
    administrator role on the key used.
 
